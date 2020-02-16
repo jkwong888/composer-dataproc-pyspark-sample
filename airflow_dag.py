@@ -51,7 +51,7 @@ default_dag_args = {
 }
 
 with models.DAG(
-        'composer_sample_quickstart',
+        'daily_show_guests_pyspark',
         # Continue to run DAG once per day
         schedule_interval=datetime.timedelta(days=1),
         default_args=default_dag_args) as dag:
@@ -68,7 +68,7 @@ with models.DAG(
         worker_machine_type='n1-standard-1')
 
     # Run the PySpark job on the Cloud Dataproc cluster master node.
-    run_dataproc_hadoop = dataproc_operator.DataProcSubmitPySparkJobOperator(
+    run_dataproc_hadoop = dataproc_operator.DataProcPySparkOperator(
         task_id='run_dataproc_pyspark',
         main=job_file,
         cluster_name='quickstart-cluster-{{ ds_nodash }}',
