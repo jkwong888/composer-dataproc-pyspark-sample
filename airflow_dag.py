@@ -68,7 +68,7 @@ with models.DAG(
         worker_machine_type='n1-standard-1')
 
     # Run the PySpark job on the Cloud Dataproc cluster master node.
-    run_dataproc_hadoop = dataproc_operator.DataProcPySparkOperator(
+    run_dataproc_pyspark = dataproc_operator.DataProcPySparkOperator(
         task_id='run_dataproc_pyspark',
         main=job_file,
         cluster_name='quickstart-cluster-{{ ds_nodash }}',
@@ -83,4 +83,4 @@ with models.DAG(
         trigger_rule=trigger_rule.TriggerRule.ALL_DONE)
 
     # Define DAG dependencies.
-    create_dataproc_cluster >> run_dataproc_hadoop >> delete_dataproc_cluster
+    create_dataproc_cluster >> run_dataproc_pyspark >> delete_dataproc_cluster
